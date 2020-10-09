@@ -1,0 +1,72 @@
+﻿@model List<StudentApplication.Models.Student>
+@{
+    ViewBag.Title = "StudentDetails";
+}
+
+<h2>Student Details</h2>
+<form method="post">
+    <div style="float:right">
+        @Html.TextBox("queryParam", string.Empty, new { @class = "form-control", @placeholder = "Search by First Name" })
+        <button class="btn" style="margin-top:-55px;margin-left:325px" type="submit">Search</button>
+    </div>
+
+    <table class="table" border="1">
+        <thead>
+            <tr>
+                <th>@Html.Label("ID")</th>
+                <th>@Html.Label("First Name")</th>
+                <th>@Html.Label("Last Name")</th>
+                <th>@Html.Label("Class")</th>
+                <th>@Html.Label("Subject")</th>
+                <th>@Html.Label("Marks")</th>
+                <th>@Html.Label("Action")</th>
+            </tr>
+        </thead>
+        @if (Model.Count > 0)
+        {
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    int counter = 1;
+                    foreach (var sub in item.Subjects)
+                    {
+                        <tr>
+                            @if (counter == 1)
+                            {
+                                <td>@item.ID</td>
+                                <td>@item.FirstName</td>
+                                <td>@item.LastName</td>
+                                <td>@item.Class</td>
+                            }
+                            else
+                            {
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            }
+                            <td>@sub.SubjectName</td>
+                            <td>@sub.Marks</td>
+                            <td>
+                                @Html.ActionLink("Edit", "AddStudent", new { id = sub.SubjectID })
+                                @Html.ActionLink("Delete", "DeleteStudent", new { studentID = item.ID, subjectID = sub.SubjectID })
+                            </td>
+                        </tr>
+                        counter += 1;
+                    }
+                }
+            </tbody>
+        }
+        else
+        {
+            <tbody>
+                <tr>
+                    <td style="border:none">
+                        No Record Found.
+                    </td>
+                </tr>
+            </tbody>
+        }
+
+    </table>
+</form>

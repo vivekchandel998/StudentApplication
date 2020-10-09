@@ -1,0 +1,82 @@
+﻿@model StudentApplication.Models.StudentViewModel
+@{
+    ViewBag.Title = "AddStudent";
+}
+
+<h2>AddStudent</h2>
+@using (Html.BeginForm("AddStudent", "Student", FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.Students.ID);
+    @Html.HiddenFor(x => x.Subjects[0].StudentID);
+    @Html.HiddenFor(x => x.Subjects[0].SubjectID);
+    <div class="form-group row">
+        <div class="col-sm-2">
+            @Html.LabelFor(x => x.Students.FirstName)
+        </div>
+        <div class="col-sm-10">
+            @Html.TextBoxFor(x => x.Students.FirstName, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-2">
+            @Html.LabelFor(x => x.Students.LastName)
+        </div>
+        <div class="col-sm-10">
+            @Html.TextBoxFor(x => x.Students.LastName, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-2">
+            @Html.LabelFor(x => x.Students.Class)
+        </div>
+        <div class="col-sm-10">
+            @Html.TextBoxFor(x => x.Students.Class, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-2">
+            @Html.LabelFor(x => x.Subjects[0].SubjectName)
+        </div>
+        <div class="col-sm-10">
+            @Html.TextBoxFor(x => x.Subjects[0].SubjectName, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-2">
+            @Html.LabelFor(x => x.Subjects[0].Marks)
+        </div>
+        <div class="col-sm-10">
+            @Html.TextBoxFor(x => x.Subjects[0].Marks, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="extraSubject">
+    </div>
+    if(ViewBag.Mode != "Edit")
+    {
+        <button class="btn" style="margin-left:33%" id="AddSubject" type="button">Add Subject</button>
+    }
+    <div>
+        <button type="submit" class="btn">Submit</button>
+    </div>
+}
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script>
+    $(document).ready(function () {
+        var counter = 1;
+        $("#AddSubject").click(function () {
+            AddSubject(counter);
+            counter += 1;
+        });
+        function AddSubject(counter) {
+            var addSubject = '<div class="form-group row"><div class="col-sm-2" ><label for="Subjects_' + counter + '__SubjectName">Subject Name</label></div ><div class="col-sm-10"><input class="form-control" id="Subjects_' + counter + '__SubjectName" name="Subjects[' + counter + '].SubjectName" type="text" value=""></div ></div > <div class="form-group row"><div class="col-sm-2"><label for="Subjects_' + counter + '__Marks">Marks</label></div><div class="col-sm-10"><input class="form-control" id="Subjects_' + counter + '__Marks" name="Subjects[' + counter + '].Marks" type="text" value=""></div></div>'
+            $(".extraSubject").append(addSubject);
+        }
+    });
+
+
+</script>
